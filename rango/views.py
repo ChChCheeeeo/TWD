@@ -13,11 +13,8 @@ def about(request):
 
 
 def index(request):
-	context = """
-		Rango says: Hello world! 
-		<br/> 
-		<a href='/rango/about'>
-			About
-		</a>
-	"""
-	return HttpResponse(context)
+	context_dict = {
+		'boldmessage': "I am bold font from the context"
+	}
+	return render(request, 'rango/index.html', context_dict)
+

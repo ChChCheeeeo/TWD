@@ -73,6 +73,8 @@ htmlcov
 *~
 *.bak
 *.swp
+*.jpg
+*.png
 
 ####################
 # For this project #
