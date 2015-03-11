@@ -75,6 +75,7 @@ htmlcov
 *.swp
 *.jpg
 *.png
+cleanUp.sh
 
 ####################
 # For this project #
