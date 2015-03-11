@@ -1,5 +1,5 @@
+from rango.forms import CategoryForm, PageForm
 from rango.models import Category, Page
-from rango.forms import CategoryForm
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -38,6 +38,42 @@ def add_category(request):
     )
 
 
+def add_page(request, category_name_slug):
+    print "wanted: {}".format(category_name_slug)
+
+    try:
+        cat = Category.objects.get(slug=category_name_slug)
+
+    except Category.DoesNotExist:
+        cat = None
+
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if cat:
+                page = form.save(commit=False)
+                page.category = cat
+                page.views = 0
+                page.save()
+
+                return category(request, category_name_slug)
+        else:
+            print form.errors
+    else:
+        form = PageForm()
+
+    context_dict = {
+        'form': form, 
+        'category': cat,
+        'category_name_slug': category_name_slug,
+    }
+
+    print "form: {0} \n cat: {1} ".format(form, cat)
+
+    return render(request, 'rango/add_page.html', context_dict)
+
+
+
 def category(request, category_name_slug):
 
     context_dict = {}
@@ -51,6 +87,7 @@ def category(request, category_name_slug):
         context_dict['pages'] = pages
        
         context_dict['category'] = category
+        context_dict['category_name_slug'] = category.slug
 
     except Category.DoesNotExist:
         pass
