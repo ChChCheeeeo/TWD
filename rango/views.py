@@ -1,17 +1,15 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
+from rango.models import Category
 
 def about(request):
+    category_list = Category.objects.order_by('-likes')[:5]
     context_dict = {
-    	'boldmessage': "You've reached the about page",
+        'categories': category_list
     }
 
-    return render(
-        request,
-        'rango/about.html',
-        context_dict
-    )
-	
+    return render(request, 'rango/index.html', context_dict)
+
 
 
 def index(request):
