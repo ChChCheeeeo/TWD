@@ -2,14 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def about(request):
-	context = """
-		Rango says here is the about page.
-		<br/> 
-		<a href='/rango/'>
-			Index
-		</a>
-	"""
-	return HttpResponse(context)
+    context_dict = {
+    	'boldmessage': "You've reached the about page",
+    }
+
+    return render(
+        request,
+        'rango/about.html',
+        context_dict
+    )
+	
 
 
 def index(request):
