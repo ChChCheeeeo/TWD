@@ -1,7 +1,8 @@
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login
 from rango.forms import UserForm, UserProfileForm
 from rango.forms import CategoryForm, PageForm
 from rango.models import Category, Page
-from django.http import HttpResponse
 from django.shortcuts import render
 
 
@@ -138,7 +139,7 @@ def register(request):
 
         else:
             print user_form.errors, profile_form.errors
-            
+
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -152,3 +153,56 @@ def register(request):
             'registered': registered
             }
     )
+
+
+
+def user_login(request):
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            
+            if user.is_active:
+    
+                login(request, user)
+                return HttpResponseRedirect('/rango/')
+            else:
+                # return render(
+                #     request,
+                #     'rango/login.html',
+                #     {
+                #         'loginError', 'Disabled account'
+                #     }
+                # )
+                return HttpResponse(
+                    "Your Rango account is disabled."
+                )
+        else:
+            
+            print "Invalid login details: {0}, {1}".format(
+                username, password
+            )
+
+            # return render(
+            #     request, 
+            #     'rango/login.html', 
+            #     {
+            #         'loginError': 'Invalid login details'
+            #     }
+            # )
+            return HttpResponse(
+                "Invalid login details supplied."
+            )
+
+    else:
+         return render(
+            request, 
+            'rango/login.html', 
+            {
+                'loginError': None
+            }
+        )
