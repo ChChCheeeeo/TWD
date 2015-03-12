@@ -160,7 +160,6 @@ def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
 
 
-
 def user_login(request):
 
     if request.method == 'POST':
@@ -211,3 +210,10 @@ def user_login(request):
                 'loginError': None
             }
         )
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+
+    return HttpResponseRedirect('/rango/')
