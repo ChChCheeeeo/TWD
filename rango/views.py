@@ -1,10 +1,15 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+
+from django.http import HttpResponseRedirect, HttpResponse
+
 from rango.forms import UserForm, UserProfileForm
 from rango.forms import CategoryForm, PageForm
+
 from rango.models import Category, Page
+
 from django.shortcuts import render
+
 
 def about(request):
     context_dict = {
@@ -18,6 +23,7 @@ def about(request):
     )	
 
 
+@login_required
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -40,8 +46,8 @@ def add_category(request):
     )
 
 
+@login_required
 def add_page(request, category_name_slug):
-    print "wanted: {}".format(category_name_slug)
 
     try:
         cat = Category.objects.get(slug=category_name_slug)
@@ -69,8 +75,6 @@ def add_page(request, category_name_slug):
         'category': cat,
         'category_name_slug': category_name_slug,
     }
-
-    print "form: {0} \n cat: {1} ".format(form, cat)
 
     return render(request, 'rango/add_page.html', context_dict)
 
@@ -159,7 +163,7 @@ def register(request):
 def restricted(request):
     return HttpResponse("Since you're logged in, you can see this text!")
 
-
+#@login_required
 def user_login(request):
 
     if request.method == 'POST':
@@ -173,34 +177,35 @@ def user_login(request):
             if user.is_active:
     
                 login(request, user)
+                
                 return HttpResponseRedirect('/rango/')
             else:
-                # return render(
-                #     request,
-                #     'rango/login.html',
-                #     {
-                #         'loginError', 'Disabled account'
-                #     }
-                # )
-                return HttpResponse(
-                    "Your Rango account is disabled."
+                return render(
+                    request,
+                    'rango/login.html',
+                    {
+                        'loginError', 'Disabled account'
+                    }
                 )
+                # return HttpResponse(
+                #     "Your Rango account is disabled."
+                # )
         else:
             
             print "Invalid login details: {0}, {1}".format(
                 username, password
             )
 
-            # return render(
-            #     request, 
-            #     'rango/login.html', 
-            #     {
-            #         'loginError': 'Invalid login details'
-            #     }
-            # )
-            return HttpResponse(
-                "Invalid login details supplied."
+            return render(
+                request, 
+                'rango/login.html', 
+                {
+                    'loginError': 'Invalid login details'
+                }
             )
+            # return HttpResponse(
+            #     "Invalid login details supplied."
+            # )
 
     else:
          return render(
