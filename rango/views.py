@@ -1,10 +1,10 @@
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from rango.forms import UserForm, UserProfileForm
 from rango.forms import CategoryForm, PageForm
 from rango.models import Category, Page
 from django.shortcuts import render
-
 
 def about(request):
     context_dict = {
@@ -153,6 +153,11 @@ def register(request):
             'registered': registered
             }
     )
+
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
 
 
 
