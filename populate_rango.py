@@ -4,6 +4,15 @@ os.environ.setdefault(
     'tango_with_django_project.settings'
 )
 
+# When importing Django models, make sure you have 
+# imported your project's settings by importing 
+# django and setting the environment variable 
+# DJANGO_SETTINGS_MODULE to be the project setting 
+# file. Then you can call django.setup() to import 
+# the django settings. If you don't, an exception 
+# will be raised. This is why we import Category and
+#  Page after the settings have been loaded.
+
 import django
 django.setup()
 
@@ -102,6 +111,23 @@ def add_page(cat, title, url, views=0):
     return p
 
 def add_cat(name, views=0, likes=0):
+     # don't want to create duplicates of the same 
+    # entry, we can use get_or_create() to check if 
+    # the entry exists in the database. method returns 
+    # a tuple of (object, created). The first element 
+    # object is a reference to the model instance that 
+    # the get_or_create() method creates if the database
+    #  entry was not found. The entry is created using
+    #  the parameters you pass to the method - just like 
+    # category, title, url and views in the example above. 
+    # If the entry already exists in the database, the 
+    # method simply returns the model instance 
+    # corresponding to the entry. created is a boolean 
+    # value; true is returned if get_or_create() had to 
+    # create a model instance. The [0] at the end 
+    # of our call to the method to retrieve the 
+    # object portion of the tuple returned from 
+    # get_or_create(). 
     c = Category.objects.get_or_create(
         name=name,
         views=views,

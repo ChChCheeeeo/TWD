@@ -13,9 +13,24 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 STATIC_PATH = os.path.join(BASE_DIR,'static')
+#  MEDIA_ROOT is used to tell Django where uploaded 
+#files should be stored on your local disk. Here it
+# gives This gives an absolute path of 
+# <workspace>/tango_with_django_project/media/.
+# development media server supplied with Django is 
+# very useful for debugging purposes. it should not 
+# be used in a production environment. read the
+# docs.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# update project urls.py first
+#  MEDIA_URL defines the base URL from which all 
+# media files will be accessible on development 
+# server. Setting the MEDIA_URL for example to 
+# /media/ will mean that user uploaded files will 
+# be available from the URL 
+# http://127.0.0.1:8000/media/
 MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
@@ -30,6 +45,12 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
+        # Put strings here, like 
+    # "/home/html/django_templates" or 
+    # "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, 
+    # not relative paths.
     TEMPLATE_PATH,
 )
 
@@ -40,12 +61,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    # default
     'django.contrib.admin',
+    # access to the authentication system
     'django.contrib.auth',
+    # used by the authentication application to 
+    # track models installed in your database
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party
+    #my apps
     'rango',
 )
 
@@ -96,4 +123,25 @@ STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
+
+# want more control over how the passwords are hashed
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
+# We'll also need to handle the scenario where a
+# user attempts to access the restricted() view,
+# but is not logged in. What do we do with the
+#  user? The simplest approach is to redirect his
+# or her browser. Django allows us to specify this
+# in our project's settings.py file, located in
+# the project configuration directory. In
+# settings.py, define the variable LOGIN_URL with
+# the URL you'd like to redirect users to that
+# aren't logged in, i.e. the login page located
+# at /rango/login/:
+# This ensures that the login_required() decorator
+# will redirect any user not logged in to the URL
+# /rango/login/
 LOGIN_URL = '/rango/login'

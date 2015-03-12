@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+<!--
+    access static media
+    The { % static %} function call should be used whenever you wish to reference static media within a template. or when wanting to use js/css/imgs
+    in tempaltes with correct html markup. files must
+    be in the static directory.
+--> 
+
+
+<!--
+    Title seen in browswer bar.
+-->
 <html>
 
 	<head>
@@ -25,6 +36,9 @@
 
             <ul>
                 {% for category in categories %}
+                <!--
+                        notice that you have a parameterized url pattern, i.e. the category url/view takes the category.slug as a parameter. To handle this you can pass the url template tag the name of the url/view and the slug, i.e. { % url ‘category’ category.slug % } within the template,
+                    -->
                 <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>                {% endfor %}
             </ul>
         {% else %}

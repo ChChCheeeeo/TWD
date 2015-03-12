@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
+<!--
+	access static media
+	The { % static % } function call should be used whenever you wish to reference static media within a template. or when wanting to use js/css/imgs
+	in tempaltes with correct html markup. files must
+	be in the static directory.
+-->	
 <html>
 
 	<head>
@@ -18,6 +24,14 @@
 		</h1>
 			Thi is the about page 
 		<strong>
+			<!-- 
+		this is passed through context
+		index.view has the context dictionary
+		{'boldmessage': " some message"}
+		so 'boldmessage' is replaced with its
+		value whereever it is found in the 
+		template. 
+		-->
 			{{ boldmessage }}
 		</strong>
 		<br />
@@ -25,6 +39,14 @@
 		<a href="/rango/">
 			Index
 		</a>
+		<!--
+	load static tag above allows to access
+	static media which allows using the static
+	template lag below.
+
+	In this example, the static tag will combine the STATIC_URL with "rango.jpg" so that the rendered HTML looks like the following.
+	< img src="/static/images/rango.jpg" alt="Picture of Rango" / > 
+	-->
 		<img src="{% static "images/puppy.jpg" %}" 
 			alt="Picture of Puppy" />		
 		<br />
