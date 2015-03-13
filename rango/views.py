@@ -109,7 +109,7 @@ def category(request, category_name_slug):
 # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
-
+    print "name is : {}".format(category_name_slug)
     try:
        # Can we find a category name slug with the 
         # given name? If we can't, the .get() method 
@@ -249,7 +249,16 @@ def register(request):
 # those logged in can access the view.
 @login_required
 def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+    #return HttpResponse("hola")
+    loggedIn = True
+    return render(
+        request,
+        'rango/restricted.html',
+        {
+            'loggedIn': loggedIn
+        }
+    )
+
 
 
 def user_login(request):

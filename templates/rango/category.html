@@ -1,37 +1,33 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% load staticfiles %}
 <!--
     The parameter you supply to the extends command should be relative from your project’s templates directory. For example, all templates we use for Rango should extend from rango/base.html, not base.html. all that exists within the category.html template is the extends command, the title block and the body_block block. You don’t need a well-formatted HTML document because base.html provides all the groundwork for you. All you’re doing is plugging in additional content to the base template to create the complete HTML document which is sent to the client’s browser.
 -->
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
 
-    <body>
-        <!--
-            We make use of the category_name variable and our category and pages objects. If category is not defined within our template context, the category was not found within the database, and a friendly error message is displayed stating this fact. If the opposite is true, we then proceed to check for pages. If pages is undefined or contains no elements, we display a message stating there are no pages present. Otherwise, the pages within the category are presented in a HTML list. For each page in the pages list, we present their title and url attributes.
-        -->
-        <h1>{{ category_name }}</h1>
-        {% if category %}
-            {% if pages %}
+{% block title %}
+    {{ category_name }}
+{% endblock %}
+
+{% block body_block %}
+    <h1>{{ category_name }}</h1>
+    {% if category %}
+        {% if pages %}
             <ul>
                 {% for page in pages %}
                 <li><a href="{{ page.url }}">{{ page.title }}</a></li>
                 {% endfor %}
             </ul>
-            {% else %}
-                <strong>No pages currently in category.</strong>
-            {% endif %}
-            
-            <br />
-
-            <a href="/rango/category/{{category_name_slug}}/add_page">
-                Add Page
-            </a>
-
         {% else %}
-            The specified category
-             {{ category_name }} does not exist!
-        {% endif %}
-    </body>
-</html>
+                <strong>No pages currently in category.</strong>
+                {% endif %}
+
+        {% if user.is_authenticated %}
+
+                <a href="{% url 'rango:add_page' category.slug %}">Add a Page</a>
+                {% endif %}
+        {% else %}
+                 The specified category {{ category_name }} does not exist!
+    {% endif %}
+
+{% endblock %}

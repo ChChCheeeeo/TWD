@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
 {% load staticfiles %}
 
 <!--
@@ -7,24 +8,19 @@
 	in tempaltes with correct html markup. files must
 	be in the static directory.
 -->	
-<html>
 
-	<head>
+{% block title %}
+	About
+{% endblock title %}
 
-		<title>
-			About
-		</title>
-
-	</head>
-
-	<body>
+{% block body_block %}
+	<h1>
+		Rango says...
+	</h1>
 	
-		<h1>
-			Rango says...
-		</h1>
-			Thi is the about page 
-		<strong>
-			<!-- 
+	This is the about page 
+	<strong>
+		<!-- 
 		this is passed through context
 		index.view has the context dictionary
 		{'boldmessage': " some message"}
@@ -32,14 +28,10 @@
 		value whereever it is found in the 
 		template. 
 		-->
-			{{ boldmessage }}
-		</strong>
-		<br />
-	
-		<a href="/rango/">
-			Index
-		</a>
-		<!--
+		{{ boldmessage }}
+	</strong>
+	<br />
+	<!--
 	load static tag above allows to access
 	static media which allows using the static
 	template lag below.
@@ -47,9 +39,7 @@
 	In this example, the static tag will combine the STATIC_URL with "rango.jpg" so that the rendered HTML looks like the following.
 	< img src="/static/images/rango.jpg" alt="Picture of Rango" / > 
 	-->
-		<img src="{% static "images/puppy.jpg" %}" 
-			alt="Picture of Puppy" />		
-		<br />
-	</body>
+	<img src="{% static "images/puppy.jpg" %}" 
+		alt="Picture of Puppy" />
 
-</html>
+{% endblock body_block %}
