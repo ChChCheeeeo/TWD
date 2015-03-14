@@ -9,6 +9,7 @@ from rango.forms import CategoryForm, PageForm
 from rango.models import Category, Page
 
 from django.shortcuts import render
+from datetime import datetime
 
 
 def about(request):
@@ -140,7 +141,7 @@ def category(request, category_name_slug):
 
 def index(request):
     #for testing cookies
-    request.session.set_test_cookie()
+    #request.session.set_test_cookie()
 
     # # Query the database for a list of ALL categories 
     # currently stored. Order the categories by no. 
@@ -156,22 +157,81 @@ def index(request):
         'categories': category_list,
         'pages' : page_list,
     }
-    # Return a rendered response to send to the 
-    # client. We make use of the shortcut function to 
-    # make our lives easier. Note that the first 
-    # parameter is the template we wish to use.
-     # HttpResponse object 
-      # template
-      # varibles in context are
-      # reachable in the temaltes
-    return render(request, 'rango/index.html', context_dict)
+  
+    # Get the number of visits to the site.
+    # We use the COOKIES.get() function to obtain
+    # the visits cookie. If the cookie exists, the
+    # value returned is casted to an integer. If the
+    # cookie doesn'Note that all cookie values are
+    # returned as strings; do not assume that a cookie
+    # storing whole numbers will return an integer.
+    # You have to manually cast this to the correct
+    # type yourself. If a cookie does not exist,
+    # you can create a cookie with the set_cookie()
+    # method of the response object you create. The
+    # method takes in two values, the name of the
+    # cookie you wish to create (as a string), and the
+    # value of the cookie. In this case, it doesn't
+    # matter what type you pass as the value - it
+    # will be automatically cast to a string.t exist,
+    # we default to zero and cast that.
+    # Note that all cookie values are returned as
+    #  strings; do not assume that a cookie storing
+    #  whole numbers will return an integer. You
+    #  have to manually cast this to the correct
+    #  type yourself. If a cookie does not exist,
+    #  you can create a cookie with the set_cookie()
+    #  method of the response object you create. The
+    #  method takes in two values, the name of the
+    #  cookie you wish to create (as a string), and
+    #  the value of the cookie. In this case, it
+    #  doesn't matter what type you pass as the
+    #  value - it will be automatically cast to a
+    #  string.
+    visits = int(request.COOKIES.get('visits', '1'))
+
+    reset_last_visit_time = False
+    response = render(request, 'rango/index.html', context_dict)
+    # Does the cookie last_visit exist?
+    if 'last_visit' in request.COOKIES:
+        # Yes it does! Get the cookie's value.
+        last_visit = request.COOKIES['last_visit']
+        # Cast the value to a Python date/time object.
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+
+        # If it's been more than a day since the last
+        # visit...
+        if (datetime.now() - last_visit_time).seconds > 60:
+            visits = visits + 1
+            # ...and flag that the cookie last visit
+            # needs to be updated
+            reset_last_visit_time = True
+    else:
+        # Cookie last_visit doesn't exist, so flag
+        # that it should be set.
+        reset_last_visit_time = True
+
+        context_dict['visits'] = visits
+
+        #Obtain our Response object early so we can
+        # add cookie information.
+        response = render(request, 'rango/index.html', context_dict)
+
+    if reset_last_visit_time:
+        response.set_cookie('last_visit', datetime.now())
+        response.set_cookie('visits', visits)
+
+    # Return response back to the user, updating any
+    # cookies that need changed.
+    return response
+
 
 
 def register(request):
     # for testing cookies
-    if request.session.test_cookie_worked():
-        print ">>>> TEST COOKIE WORKED!"
-        request.session.delete_test_cookie()
+    # if request.session.test_cookie_worked():
+    #     print ">>>> TEST COOKIE WORKED!"
+    #     request.session.delete_test_cookie()
 
     # A boolean value for telling the template
     # whether the registration was successful.
