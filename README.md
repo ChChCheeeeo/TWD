@@ -157,3 +157,4 @@ The most commonly used way of holding state is through the use of a session ID s
 
 To test out cookies, you can make use of some convenience methods provided by Django’s request object. The three of particular interest to us are set_test_cookie(), test_cookie_worked() and delete_test_cookie(). In one view, you will need to set a cookie. In another, you’ll need to test that the cookie exists. Two different views are required for testing cookies because you need to wait to see if the client has accepted the cookie from the server.
 
+Session cookies accumulate. So if you are using the database backend you will have to periodically clear the database that stores the cookies. This can be done using python manage.py clearsessions. 

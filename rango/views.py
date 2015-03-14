@@ -13,15 +13,26 @@ from datetime import datetime
 
 
 def about(request):
+    # If the visits session varible exists,
+    # take it and use it.
+    # If it doesn't, we haven't visited the site
+    # so set the count to zero.
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+    
     context_dict = {
     	'boldmessage': "You've reached the about page",
+        'visits': count
     }
 
     return render(
         request,
         'rango/about.html',
         context_dict
-    )	
+    )
+
 
 
 @login_required
@@ -157,74 +168,44 @@ def index(request):
         'categories': category_list,
         'pages' : page_list,
     }
-  
-    # Get the number of visits to the site.
-    # We use the COOKIES.get() function to obtain
-    # the visits cookie. If the cookie exists, the
-    # value returned is casted to an integer. If the
-    # cookie doesn'Note that all cookie values are
-    # returned as strings; do not assume that a cookie
-    # storing whole numbers will return an integer.
-    # You have to manually cast this to the correct
-    # type yourself. If a cookie does not exist,
-    # you can create a cookie with the set_cookie()
-    # method of the response object you create. The
-    # method takes in two values, the name of the
-    # cookie you wish to create (as a string), and the
-    # value of the cookie. In this case, it doesn't
-    # matter what type you pass as the value - it
-    # will be automatically cast to a string.t exist,
-    # we default to zero and cast that.
-    # Note that all cookie values are returned as
-    #  strings; do not assume that a cookie storing
-    #  whole numbers will return an integer. You
-    #  have to manually cast this to the correct
-    #  type yourself. If a cookie does not exist,
-    #  you can create a cookie with the set_cookie()
-    #  method of the response object you create. The
-    #  method takes in two values, the name of the
-    #  cookie you wish to create (as a string), and
-    #  the value of the cookie. In this case, it
-    #  doesn't matter what type you pass as the
-    #  value - it will be automatically cast to a
-    #  string.
-    visits = int(request.COOKIES.get('visits', '1'))
 
+    # Now instead of storing the cookies directly in
+    # the request (and thus on the client's machine),
+    # you can access the server side cookies via the
+    # method call request.session.get() and store
+    # them with request.session[]. Note that a session
+    # ID cookie is still used to remember the client's
+    # machine (so technically a browser side cookie
+    # exists), however all the data is stored serve side.
+    visits = request.session.get('visits')
+    if not visits:
+        visits = 1
     reset_last_visit_time = False
-    response = render(request, 'rango/index.html', context_dict)
-    # Does the cookie last_visit exist?
-    if 'last_visit' in request.COOKIES:
-        # Yes it does! Get the cookie's value.
-        last_visit = request.COOKIES['last_visit']
-        # Cast the value to a Python date/time object.
+
+    last_visit = request.session.get('last_visit')
+    if last_visit:
         last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
 
-        # If it's been more than a day since the last
-        # visit...
-        if (datetime.now() - last_visit_time).seconds > 60:
+        if (datetime.now() - last_visit_time).seconds > 0:
+            # ...reassign the value of the cookie to +1 of
+            # what it was before...
             visits = visits + 1
-            # ...and flag that the cookie last visit
-            # needs to be updated
+            # ...and update the last visit cookie, too.
             reset_last_visit_time = True
     else:
-        # Cookie last_visit doesn't exist, so flag
-        # that it should be set.
+        # Cookie last_visit doesn't exist, so create it to
+        # the current date/time.
         reset_last_visit_time = True
 
-        context_dict['visits'] = visits
-
-        #Obtain our Response object early so we can
-        # add cookie information.
-        response = render(request, 'rango/index.html', context_dict)
-
     if reset_last_visit_time:
-        response.set_cookie('last_visit', datetime.now())
-        response.set_cookie('visits', visits)
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = visits
+    context_dict['visits'] = visits
 
-    # Return response back to the user, updating any
-    # cookies that need changed.
+
+    response = render(request,'rango/index.html', context_dict)
+
     return response
-
 
 
 def register(request):
