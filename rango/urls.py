@@ -4,25 +4,25 @@ from rango import views
 urlpatterns = patterns(
     #  When the URL pattern matching takes place, only 
     # a portion of the original URL string is 
-    # considered. This is because our Django project 
-    # will first process the original URL string (i.e. 
-    # http://www.tangowithdjango.com/rango/). Once this 
-    # has been processed, it is removed, with the 
-    # remained being passed for pattern matching. In 
+    # considered. Django project will first process the
+    # original URL string (i.e. 
+    # http://www.tangowithdjango.com/rango/). Once 
+    # processed, it is removed, with the remained
+    # being passed for pattern matching. In 
     # this instance, there would be nothing left - so 
     # an empty string would match!
 	'',
-#  Any URL supplied by the user that matches this 
+    # Any URL supplied by the user that matches this 
     # pattern means that the view views.index() would 
-    # be invoked by Django. The view would be passed a 
-    # HttpRequest object as a parameter, containing 
-    
-    # information about the user's request to the server.
+    # be invoked by Django. The view would be passed
+    # a HttpRequest object as a parameter, containing 
+    # information about the user's request to the
+    # server.
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^add_category/$', views.add_category, 
     	name='add_category'),
-# pass the value of the category_name_url parameter
+    # pass the value of the category_name_url parameter
     # to the category() function. Invoke view.category
     # when regex is matched. Matching view then passed
     # to view view.category() as paremeter

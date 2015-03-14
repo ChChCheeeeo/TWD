@@ -12,17 +12,17 @@
     <h1>
         Add a Category
     </h1>
-  <!--
-             all data captured within this form is sent to the URL /rango/add_category/ as a HTTP POST request
-        -->
+<!--
+     all data captured within this form is sent to the URL /rango/add_category/ as a HTTP POST request
+-->
 
     <form id="category_form" method="post" action="/rango/add_category/">
 
         <input type="submit" name="submit" value="
             Create Category" />
-        <!--
-                 Cross-Site Request Forgery (CSRF) token, which helps to protect and secure the HTTP POST action that is initiated on the subsequent submission of a form
-        -->
+<!--
+     Cross-Site Request Forgery (CSRF) token, which helps to protect and secure the HTTP POST action that is initiated on the subsequent submission of a form
+-->
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}

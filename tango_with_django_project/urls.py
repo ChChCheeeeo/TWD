@@ -9,7 +9,7 @@ urlpatterns = patterns(
     # url(r'^$', 'tango_with_django_project.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^admin/', include(admin.site.urls)),
-     # connect project urls.py to app urls.py
+    # connect project urls.py to app urls.py
     # The added mapping looks for url strings that 
     # match the patterns ^rango/. When a match is 
     # made the remainder of the url string is then 

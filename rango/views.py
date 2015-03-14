@@ -27,25 +27,24 @@ def about(request):
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
-# Have we been provided with a valid form?
-        # saving form data provided by the user to 
-        # the associated model, and rendering the
-        # Rango homepage
+        # provided a valid form? saving form data
+        # provided by the user to the associated
+        # model, and rendering the homepage
         if form.is_valid():
             form.save(commit=True)
 
             return index(request)
         else:
-            # The supplied form contained errors - 
-            # just print them to the terminal.
+            # supplied form contained errors
+            # just print them to the terminal
             # if there are errors, redisplay the 
             # form with error messages
             print form.errors
     else:
-         # If the request was not a POST (e.g GET), 
+        # If request was not a POST (e.g GET), 
         # display the form to enter details.
         form = CategoryForm()
-# Bad form (or form details), no form supplied...
+    # Bad form (or form details), no form supplied
     # Render the form with error messages (if any).
     return render(
         request, 
@@ -58,8 +57,7 @@ def add_category(request):
 
 @login_required
 def add_page(request, category_name_slug):
-        # allow users to add pages to a given category.
-
+    # allow users to add pages to a given category.
 
     try:
         cat = Category.objects.get(slug=category_name_slug)

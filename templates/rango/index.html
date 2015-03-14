@@ -48,12 +48,19 @@
 
                         </a></li> -->
                     
-                    <!--
-                    why do i need namespacing?
-                -->
-                    <li><a href="{% url 'rango:category' category.slug %}">
-                        {{ category.name }}
-                    </a></li>
+<!--
+    why do i need namespacing? if project urls.py has
+    a namespace defined, they need to be included (see below) else will get an error like:
+
+    NoReverseMatch at /rango/
+
+    Reverse for 'category' with arguments '(u'python',)' and keyword arguments '{}' not found. 0 pattern(s) tried: []
+-->
+                    <li>
+                        <a href="{% url 'rango:category' category.slug %}">
+                            {{ category.name }}
+                        </a>
+                    </li>
             {% endfor %}
         </ul>
     {% else %}

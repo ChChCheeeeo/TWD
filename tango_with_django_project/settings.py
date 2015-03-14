@@ -130,16 +130,13 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
 
-# We'll also need to handle the scenario where a
-# user attempts to access the restricted() view,
-# but is not logged in. What do we do with the
-#  user? The simplest approach is to redirect his
-# or her browser. Django allows us to specify this
-# in our project's settings.py file, located in
-# the project configuration directory. In
-# settings.py, define the variable LOGIN_URL with
-# the URL you'd like to redirect users to that
-# aren't logged in, i.e. the login page located
+# handle the scenario where a user attempts to
+# access the restricted() view, but is not
+# logged in. What do we do with the user?
+# simplest approach is to redirect their browser.
+# define the variable LOGIN_URL with the URL
+# you'd like to redirect users to that aren't
+# logged in, i.e. the login page located
 # at /rango/login/:
 # This ensures that the login_required() decorator
 # will redirect any user not logged in to the URL
