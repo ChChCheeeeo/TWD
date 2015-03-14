@@ -20,6 +20,8 @@ urlpatterns = patterns(
     # www.stuff.com/rango/index
     # cut rango here, pass index to rango.urls
     url(r'^rango/', include('rango.urls', namespace='rango')),
+    (r'^accounts/', include('registration.backends.simple.urls')),
+
 )
 
 
