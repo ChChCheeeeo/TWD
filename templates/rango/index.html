@@ -14,10 +14,15 @@
 -->
 
 {% block title %}
-    Index
+    Home
 {% endblock title %}
 
 {% block body_block %}
+    <div class="page-header">
+        <h1>
+            Welcome Home!
+        </h1>
+    </div>
 
     {% if user.is_authenticated %}
         <h1>

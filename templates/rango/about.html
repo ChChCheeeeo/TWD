@@ -14,11 +14,13 @@
 {% endblock title %}
 
 {% block body_block %}
-	<h1>
-		Rango says...
-	</h1>
-	
-	<strong>
+    <div class="page-header">
+        <h1>
+        	About
+        </h1>
+    </div>
+    <div>
+        <strong>
 		<!-- 
 		this is passed through context
 		index.view has the context dictionary
@@ -27,12 +29,12 @@
 		value whereever it is found in the 
 		template. 
 		-->
-		{{ boldmessage }}
-	</strong>
+			{{ boldmessage }}
+		</strong>
 	<br />
 	You've been here {{ visits }} times!
 	<br />
-	<!--
+<!--
 	load static tag above allows to access
 	static media which allows using the static
 	template lag below.
@@ -40,7 +42,6 @@
 	In this example, the static tag will combine the STATIC_URL with "rango.jpg" so that the rendered HTML looks like the following.
 	< img src="/static/images/rango.jpg" alt="Picture of Rango" / > 
 	-->
-	<img src="{% static "images/puppy.jpg" %}" 
-		alt="Picture of Puppy" />
-
-{% endblock body_block %}
+        <img src="{% static "images/puppy.jpg" %}" alt="Picture of Puppy" />
+    </div>
+{% endblock %}
