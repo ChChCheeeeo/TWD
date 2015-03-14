@@ -142,3 +142,18 @@ Templates are very powerful and you can even create your own template tags. Here
 However, templates can also be used to minimise code within your application’s views. For example, if you wanted to include the same database-driven content on each page of your application, you could construct a template that calls a specific view to handle the repeating portion of your webpages. This then saves you from having to call the Django ORM functions which gather the required data for the template in every view that renders it.
 
 To learn more about the extensive functionality offered by Django’s template language, check out the official Django documentation on templates.
+
+cookies
+
+Whenever a request to a website is made, the webserver returns the content of the requested page. In addition, one or more cookies may also be sent to the client, which are in turn stored in a persistent browser cache. When a user requests a new page from the same web server, any cookies that are matched to that server are sent with the request. The server can then interpret the cookies as part of the request’s context and generate a response to suit.
+
+As an example, you may login to a site with a particular username and password. When you have been authenticated, a cookie may be returned to your browser containing your username, indicating that you are now logged into the site. At every request, this information is passed back to the server where your login information is used to render the appropriate page - perhaps including your username in particular places on the page. Your session cannot last forever, however - cookies have to expire at some point in time - they cannot be of infinite length. 
+
+The passing of information in the form of cookies can open up potential security holes in your web application’s design. a majority of websites use cookies for application specific functionality.
+
+HTTP is a stateless protocol. This therefore means that a client computer running a web browser must establish a new network connection (a TCP connection) to the server each time a resource is requested (HTTP GET) or sent (HTTP POST)
+
+The most commonly used way of holding state is through the use of a session ID stored as a cookie on a client’s computer. A session ID can be considered as a token (a sequence of characters) to identify a unique session within a particular web application. Instead of storing all kinds of information as cookies on the client (such as usernames, names, passwords...), only the session ID is stored, which can then be mapped to a data structure on the web server. Within that data structure, you can store all of the information you require. This approach is a much more secure way to store information about users. This way, the information cannot be compromised by a insecure client or a connection which is being snooped.
+
+To test out cookies, you can make use of some convenience methods provided by Django’s request object. The three of particular interest to us are set_test_cookie(), test_cookie_worked() and delete_test_cookie(). In one view, you will need to set a cookie. In another, you’ll need to test that the cookie exists. Two different views are required for testing cookies because you need to wait to see if the client has accepted the cookie from the server.
+

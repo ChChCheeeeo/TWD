@@ -68,6 +68,8 @@ INSTALLED_APPS = (
     # used by the authentication application to 
     # track models installed in your database
     'django.contrib.contenttypes',
+    # store session information in a
+    #  Django model/database
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -77,6 +79,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    #  SessionMiddleware middleware which enables the
+    # creation of unique sessionid cookies.
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

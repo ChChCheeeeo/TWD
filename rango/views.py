@@ -139,6 +139,9 @@ def category(request, category_name_slug):
 
 
 def index(request):
+    #for testing cookies
+    request.session.set_test_cookie()
+
     # # Query the database for a list of ALL categories 
     # currently stored. Order the categories by no. 
     # likes in descending order. Retrieve the top 5 
@@ -165,7 +168,12 @@ def index(request):
 
 
 def register(request):
-  # A boolean value for telling the template
+    # for testing cookies
+    if request.session.test_cookie_worked():
+        print ">>>> TEST COOKIE WORKED!"
+        request.session.delete_test_cookie()
+
+    # A boolean value for telling the template
     # whether the registration was successful.
     # Set to False initially. Code changes value to
     # True when registration succeeds.
