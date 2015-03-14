@@ -1,6 +1,13 @@
+from registration.backends.simple.views import RegistrationView
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+
+
+# redirect user to index page on successful login
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self,request, user):
+        return '/rango/'
 
 
 urlpatterns = patterns(
@@ -20,6 +27,9 @@ urlpatterns = patterns(
     # www.stuff.com/rango/index
     # cut rango here, pass index to rango.urls
     url(r'^rango/', include('rango.urls', namespace='rango')),
+    #this url pattern overrides the default pattern
+    # in accounts. Look up .as_view()
+    url(r'^accounts/register/$', MyRegistrationView.as_view(), name='registration_register'),
     (r'^accounts/', include('registration.backends.simple.urls')),
 
 )
