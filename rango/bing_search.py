@@ -68,3 +68,17 @@ def run_query(search_terms):
 
     # Return the list of results to the calling function.
     return results
+
+def main():
+    search_term = raw_input("Input search term: ")
+    results = run_query(search_term)
+
+    for rank, result in enumerate(results):
+        print "{0} - {1} : {2}".format(
+            rank+1, 
+            result['title'], 
+            result["link"]
+        )
+
+if __name__=='__main__':
+    main()
