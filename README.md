@@ -179,3 +179,7 @@ The Bing Search API
 
 The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications.
 
+Adding Search Functionality
+
+To add search functionality to Rango, we first must write an additional function to query the Bing API. This code should take in the request from a particular user and return to the calling function a list of results. 
+
