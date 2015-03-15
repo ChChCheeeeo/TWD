@@ -76,6 +76,7 @@ htmlcov
 *.jpg
 *.png
 cleanUp.sh
+updateGit.sh
 keys.py
 
 ####################

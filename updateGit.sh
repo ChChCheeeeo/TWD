@@ -11,7 +11,10 @@ new=$((old+1))
 # double check pushing to correct branch
 # doesnt push automaticallly since
 # still have to input username and password
+
 git branch
+git add .
+git commit -m "$2"
 git push
 
 git checkout master
