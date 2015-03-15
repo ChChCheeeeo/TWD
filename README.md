@@ -174,3 +174,8 @@ make a templatetag by nameing a file in rango templatetags.
 import template from django (see rango_extras.py example). give it an associated html file. in where you want to access template tag, load it (e.g {% load rango_extras %}) and access block by calling the method (e.g get_category_list() ). 
 
 You will need to restart your server every time you modify the templatetags so that they are registered.
+
+The Bing Search API
+
+The Bing Search API provides you with the ability to embed search results from the Bing search engine within your own applications.
+
