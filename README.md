@@ -183,4 +183,3 @@ Adding Search Functionality
 
 To add search functionality to Rango, we first must write an additional function to query the Bing API. This code should take in the request from a particular user and return to the calling function a list of results. 
 
-tacos
