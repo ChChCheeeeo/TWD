@@ -14,9 +14,9 @@
 
 {% block body_block %}
 
-    <form id=”category_form” method=”post” action=”{% url ‘add_category’ %}”>
+    <form id="category_form" method="post" action="{% url 'rango:add_category' %}">
 
-        <h2 class=”form-signin-heading”>
+        <h2 class="form-signin-heading">
             <a>
                 Add a Category
             </a>
@@ -28,7 +28,7 @@
 
         <br/>
 
-        <button class=”btn btn-primary” type=”submit” name=”submit”>
+        <button class="btn btn-primary" type="submit" name="submit">
             Create Category
         </button>
 

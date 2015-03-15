@@ -61,6 +61,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+     #my apps
+    'rango',
+
     # default
     'django.contrib.admin',
     # access to the authentication system
@@ -73,11 +76,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     #third party
     'registration',
     'bootstrap_toolkit',
-    #my apps
-    'rango',
+   
 )
 
 MIDDLEWARE_CLASSES = (

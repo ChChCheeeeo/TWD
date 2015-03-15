@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- { % load rango_extras % }
+ --><!-- { % get_category_list % } -->
+<!--
+	# turn this into a template tag by loading it
+	# where you want to use it and call the method
+	# e.g.
+	# { % load rango_extras % }
+	# { % get_category_list % }
+-->
+
+{% if cats %}
+    <ul class="nav nav-sidebar">
+	    {% for c in cats %}
+<!--
+	check if category being displayed is the same as the category being passed through (i.e. act_cat), if so, assign active class to it from Bootstrap (http://getbootstrap.com/components/#nav).
+
+	We have passed through the category variable. When you view a category page, the template has access to the category variable, and so provides a value to the templatetag get_category_list(). This is then used in the cats.html template to select which category to highlight as active.
+-->
+	    	{% if c == act_cat %}
+	    		<li class="active">
+	    		</li>
+	    	{% else %}
+	    	{% endif %}
+	        <li>
+	        	<a href="{% url 'rango:category'  c.slug %}">
+	        		{{ c.name }}
+	        	</a>
+	        </li>
+	    {% endfor %}
+
+	{% else %}
+	    <li>
+	    	<strong >
+	    		There are no category present.
+	    	</strong>
+	    </li>
+
+    </ul>
+{% endif %}

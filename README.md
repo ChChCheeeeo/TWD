@@ -158,3 +158,19 @@ The most commonly used way of holding state is through the use of a session ID s
 To test out cookies, you can make use of some convenience methods provided by Django’s request object. The three of particular interest to us are set_test_cookie(), test_cookie_worked() and delete_test_cookie(). In one view, you will need to set a cookie. In another, you’ll need to test that the cookie exists. Two different views are required for testing cookies because you need to wait to see if the client has accepted the cookie from the server.
 
 Session cookies accumulate. So if you are using the database backend you will have to periodically clear the database that stores the cookies. This can be done using python manage.py clearsessions. 
+
+
+Providing Categories on Every Page
+
+It would be nice to show the different categories that users can browse through in the sidebar on each page. Given what we have learnt so far we could do the following:
+
+    In the base.html template we could add some code to display an item list of categories, if the category list has been passed through.
+    Then in each view, we could access the Category object, get all the categories, and return that in the context dictionary.
+
+However, this is a pretty nasty solution. It requires a lot of cutting and pasting of code. Also, we will run into problems, when we want to show the categories on pages serviced by the django-registration-redux package. So we need a different approach, by using templatetags that are included in the template that request the data required.
+
+make a templatetag by nameing a file in rango templatetags.
+
+import template from django (see rango_extras.py example). give it an associated html file. in where you want to access template tag, load it (e.g {% load rango_extras %}) and access block by calling the method (e.g get_category_list() ). 
+
+You will need to restart your server every time you modify the templatetags so that they are registered.
