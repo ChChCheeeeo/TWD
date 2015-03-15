@@ -19,8 +19,8 @@ git push
 
 git checkout master
 git pull origin master
-git merge "$old"
+git merge "ch$old"
 git push origin master
 
-git checkout -b "$new"
-git push -u origin "$new"
+git checkout -b "ch$new"
+git push -u origin "ch$new"
