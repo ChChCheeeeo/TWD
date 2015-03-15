@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     #third party
     'registration',
+    'bootstrap_toolkit',
     #my apps
     'rango',
 )
