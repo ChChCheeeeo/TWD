@@ -10,7 +10,8 @@ from rango.bing_search import run_query
 
 from rango.models import Category, Page
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 from datetime import datetime
 
 def about(request):
@@ -120,7 +121,6 @@ def category(request, category_name_slug):
 # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
-    print "name is : {}".format(category_name_slug)
     try:
        # Can we find a category name slug with the 
         # given name? If we can't, the .get() method 
@@ -410,3 +410,20 @@ def search(request):
             result_list = run_query(query)
 
     return render(request, 'rango/search.html', {'result_list': result_list})
+
+
+def track_url(request):
+    url = '/rango/'
+    
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            try:
+                page_id = request.GET['page_id']
+                page = Page.objects.get(id=int(page_id))
+                page.views = page.views + 1
+                page.save()
+                url = page.url
+            except:
+                pass
+
+    return redirect(url)

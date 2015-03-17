@@ -34,42 +34,78 @@
 
     </form>
 
+    <br />
+    {% if category %}
+        {% if pages %}
+            <ul>
+                {% for page in pages %}
+                    <li>
+                        <!-- <a href="{ { page.url } }"> -->
+                        <!-- after so many days, it's page_id, not pageid !! -->
+                        <a href="{% url 'rango:goto' %}?page_id={{page.id}}">
+                            {{ page.title }}
+                        </a>
+                        {{ page.views }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <strong>
+                No pages currently in category.
+            </strong>
+            <br />
+
+        {% endif %}
+
+<!--
+    Doesnt look nice. Make it look like Create Category.
+-->
+        {% if user.is_authenticated %}
+                <a href="{% url 'rango:add_page' category.slug %}">
+                    Add a Page
+                </a>
+        {% endif %}
+
+    {% else %}
+        The specified category {{ category_name }} does not exist!
+    {% endif %}
+
 {% endblock %}
 
 <!-- 
-{ % block body_block % }
+{% block body_block % }
     <div class="page-header">
         <h1>
             {{ category_name }}
         </h1>
     </div>
 
-    { % if category % }
-        { % if pages % }
+    {% if category % }
+        {% if pages % }
             <ul>
-                { % for page in pages % }
+                {% for page in pages % }
                     <li>
                         <a href="{{ page.url }}">
                             {{ page.title }}
                         </a>
                     </li>
-                { % endfor % }
+                {% endfor % }
             </ul>
-        { % else % }
+        {% else % }
             <strong>
                 No pages currently in category.
             </strong>
-        { % endif % }
+        {% endif % }
 
-        { % if user.is_authenticated % }
-                <a href="{ % url 'rango:add_page' category.slug % }">
+        {% if user.is_authenticated % }
+                <a href="{% url 'rango:add_page' category.slug % }">
                     Add a Page
                 </a>
-        { % endif % }
-    { % else % }
+        {% endif % }
+    {% else % }
         The specified category {{ category_name }} does not exist!
-    { % endif % }
+    {% endif % }
 
  
-{ % endblock % }
+{% endblock % }
  -->
