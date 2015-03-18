@@ -12,6 +12,38 @@
 
 {% block body_block %}
 
-	You made it here
-	
+
+	{% if user %}
+		{% if profile %}
+			{% if profile.picture %}
+				<img src="{{ profile.picture.url }}" alt="picture" height="60" width="60"/>
+				<br />
+			{% endif %}
+		{% endif %} 
+
+		User: 
+			{{ user.username }}
+		<br />
+		Email:
+			{{ user.email }}
+		<br />
+
+		Website: 
+		<a href="{{ profile.website }}">
+			{{ profile.website }}
+		</a>
+		<br />
+	{% else %}
+		User: 
+			Unknown
+		<br />
+		Email:
+			Unknown
+		<br />
+
+		Website: 
+			Unknown
+		<br />
+
+	{% endif %}
 {% endblock body_block %}

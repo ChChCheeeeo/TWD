@@ -9,7 +9,7 @@ from rango.forms import CategoryForm, PageForm
 
 from rango.bing_search import run_query
 
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
 
 from django.shortcuts import render, redirect
 
@@ -231,8 +231,23 @@ def index(request):
 
     return response
 
+@login_required
 def profile(request):
-    pass
+    if request.method=='GET':
+        user = User.objects.get(id=request.user.id)
+        
+        # did user have a website/picture?
+        try:
+            profile = UserProfile.objects.get(user=user)
+        except:
+            profile = None
+
+    context_dict = {
+        'user': user,
+        'profile': profile
+    }
+
+    return render(request, 'rango/profile.html', context_dict)
 
 def register_profile(request):
     if request.method=='POST':
@@ -251,7 +266,7 @@ def register_profile(request):
                 return index(request)
     else:
         form = UserProfileForm(request.GET)
-        
+
     return render(request, 'rango/profile_registration.html', {'profile_form': form})
 
 ### function taken over by redux ###
