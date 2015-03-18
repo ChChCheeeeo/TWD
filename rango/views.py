@@ -174,6 +174,28 @@ def category(request, category_name_slug):
     return render(request, 'rango/category.html', context_dict)
 
 
+@login_required
+def edit_profile(request):
+     # first calling GET profile.html
+    # then post after submitting from edit_profile.html
+    if request.method == 'POST':
+        current_profile = UserProfile.objects.get(user=request.user)
+        # 
+        current_form = UserProfileForm(request.POST, instance=current_profile)
+        
+        if current_form.is_valid():
+            updated_profile = current_form.save(commit=False)
+            try:
+                updated_profile.picture = request.FILES['picture']
+            except:
+                pass
+        updated_profile.save()
+        return profile(request)
+    else:
+        current_form = UserProfileForm(request.GET)
+        return render(request, 'rango/edit_profile.html', {'current_form': current_form})
+
+
 def index(request):
     #for testing cookies
     #request.session.set_test_cookie()
@@ -233,14 +255,14 @@ def index(request):
 
 @login_required
 def profile(request):
-    if request.method=='GET':
-        user = User.objects.get(id=request.user.id)
-        
-        # did user have a website/picture?
-        try:
-            profile = UserProfile.objects.get(user=user)
-        except:
-            profile = None
+   #if request.method=='GET':
+    user = User.objects.get(id=request.user.id)
+    
+    # did user have a website/picture?
+    try:
+        profile = UserProfile.objects.get(user=user)
+    except:
+        profile = None
 
     context_dict = {
         'user': user,
@@ -256,7 +278,7 @@ def register_profile(request):
             if request.user.is_authenticated():
                 profile = profile_form.save(commit=False)
                 user = User.objects.get(id=request.user.id)
-                profile.user = user
+                profile.user7 = user
 
                 if 'picture' in request.FILES:
                     profile.picture = request.FILES['picture']
