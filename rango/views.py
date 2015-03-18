@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from django.http import HttpResponseRedirect, HttpResponse
 
@@ -229,6 +230,29 @@ def index(request):
     response = render(request,'rango/index.html', context_dict)
 
     return response
+
+def profile(request):
+    pass
+
+def register_profile(request):
+    if request.method=='POST':
+        profile_form = UserProfileForm(data=request.POST)
+        if profile_form.is_valid():
+            if request.user.is_authenticated():
+                profile = profile_form.save(commit=False)
+                user = User.objects.get(id=request.user.id)
+                profile.user = user
+
+                if 'picture' in request.FILES:
+                    profile.picture = request.FILES['picture']
+                
+                profile.save()
+                
+                return index(request)
+    else:
+        form = UserProfileForm(request.GET)
+        
+    return render(request, 'rango/profile_registration.html', {'profile_form': form})
 
 ### function taken over by redux ###
 # def register(request):

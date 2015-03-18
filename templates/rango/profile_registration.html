@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+
+
+<!--
+	Disply UserProfileForm
+-->
+{% block title %}
+    Profile Registration
+{% endblock %}
+
+{% block body_block %}
+
+	<form id="profile_form" method="post" action="/rango/add_profile/"
+	enctype="multipart/form-data">
+		{% csrf_token %}
+		{{ profile_form.as_p }}
+		<input type="submit" name="submit" value="Finish Register"/>
+	</form>
+
+
+<!-- 
+	<form role="form" id="profile_form" method="post" enctype="multipart/form-data" action="{ % url 'rango:add_profile' % }">
+
+        { % csrf_token % }
+        
+	    <label for="website">Your Website: </label>
+	    <input id="website" type="text" name="website" value="{{ www.google.com }}">
+
+	    <input type="submit" value="OK">
+
+            <p>
+                <input id="id_picture" type="file" class="" name="picture">
+            </p>
+            <input type="submit" value="Submit" />
+        </form> -->
+
+	
+{% endblock body_block %}

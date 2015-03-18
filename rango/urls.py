@@ -22,6 +22,7 @@ urlpatterns = patterns(
     url(r'^about/$', views.about, name='about'),
     url(r'^add_category/$', views.add_category, 
     	name='add_category'),
+    url(r'^add_profile/$', views.register_profile, name='add_profile'),
     # pass the value of the category_name_url parameter
     # to the category() function. Invoke view.category
     # when regex is matched. Matching view then passed
@@ -44,6 +45,7 @@ urlpatterns = patterns(
     # url(r'^login/$', views.user_login, name='login'),
     # url(r'^logout/$', views.user_logout, name='logout'),
     # url(r'^register/$', views.register, name='register'),
+    url(r'^profile/$', views.profile, name='profile'),
     url(r'^restricted/$', views.restricted, name='restricted'),
     url(r'^search/$', views.search, name='search'),
     # url(r'^goto/(?P?<page_id>[\w\-]+)/$', 
