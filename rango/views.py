@@ -117,10 +117,16 @@ def add_page(request, category_name_slug):
 # defined for our view. Using category_name_slug in 
 # our view will give python-books, or whatever value 
 # was supplied as that part of the URL.
+
+# Update the category view to handle a HTTP POST request.
+#  The view must then include any search results in the
+#   context dictionary for the template to render.
+
 def category(request, category_name_slug):
-# Create a context dictionary which we can pass
+    # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
+
     try:
        # Can we find a category name slug with the 
         # given name? If we can't, the .get() method 
@@ -129,7 +135,7 @@ def category(request, category_name_slug):
         # or raises an exception.  
         category = Category.objects.get(slug=category_name_slug)
         context_dict['category_name'] = category.name
-    # Retrieve all of the associated pages.
+        # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
         pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
@@ -141,6 +147,22 @@ def category(request, category_name_slug):
         # category slug for adding pages gets passed
         # to context
         context_dict['category_name_slug'] = category.slug
+
+        if request.method=='POST':
+            result_list = []
+
+            query = request.POST.get('query').strip()
+            if query:
+                result_list = pages.filter(title__icontains=query)
+                result_list = [{
+                    'title': page.title,
+                    'summary': unicode('None'), 
+                    'link': page.url
+                } for page in result_list]
+
+                result_list += run_query(query)
+
+                context_dict['result_list'] = result_list
 
     except Category.DoesNotExist:
           # We get here if we didn't find the specified 
@@ -413,12 +435,17 @@ def search(request):
 
 
 def track_url(request):
+    # TODO: create url patter to go with this
+    # why not. 
+
     url = '/rango/'
     
     if request.method == 'GET':
         if 'page_id' in request.GET:
+
+            page_id = request.GET['page_id']
+            
             try:
-                page_id = request.GET['page_id']
                 page = Page.objects.get(id=int(page_id))
                 page.views = page.views + 1
                 page.save()
