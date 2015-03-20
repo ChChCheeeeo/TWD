@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+
+
+
+{% block title %}
+    Profile Registration
+{% endblock %}
+
+{% block body_block %}
+
+	{% if users %}
+		{% for user in users %}
+			<br />
+			User: 
+				{{ user.username }}
+			<br />
+			Email:
+				{{ user.email }}
+			<br />
+			Profile: 
+				<!--
+					this sends current user request :(
+				-->
+<!-- 				<a href="{ % url 'rango:profile' % }">
+ -->				<a href="{% url 'rango:view_profile' %}?page_id={{user.id}}">
+
+	    			Profile
+	        	</a>
+	        	{{ user.id }}
+	        	{{ user.url }}
+	        <br />
+
+			{% if profiles %}
+				{% for profile in profiles %}
+					{% if profile.user_id == user.id %}
+						{% if profile.picture %}
+							<img src="{{ profile.picture.url }}" alt="picture" height="60" width="60"/>
+							<br />
+						{% endif %}
+
+						{% if profile.website %}
+							Website: 
+							<a href="{{ profile.website }}">
+								{{ profile.website }}
+							</a>
+							
+						{% else %}
+							Website:
+								None
+						{% endif %}
+						<br />
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+
+			{% if user.username == current_user.username %}
+			
+				<a href="{% url 'rango:edit_profile' %}">
+	    			Edit Profile
+	        	</a>
+	        	<br />
+
+			{% endif %}
+			
+		{% endfor %}
+	{% endif %}
+
+
+<!-- 	{ % if users % }
+		{ % if profile % }
+			{ % if profiles.picture % }
+				<img src="{{ profile.picture.url }}" alt="picture" height="60" width="60"/>
+				<br />
+			{ % endif % }
+		{ % endif % } 
+
+		User: 
+			{{ user.username }}
+		<br />
+		Email:
+			{{ user.email }}
+		<br />
+
+		Website: 
+		<a href="{{ profile.website }}">
+			{{ profile.website }}
+		</a>
+		<br />
+	{ % else % }
+		User: 
+			Unknown
+		<br />
+		Email:
+			Unknown
+		<br />
+
+		Website: 
+			Unknown
+		<br />
+
+	{ % endif % }
+    
+    { % if user.is_authenticated % }
+    	<a href="{ % url 'rango:edit_profile' % }">
+    		Edit Profile
+        </a>
+	{ % endif % } -->
+
+{% endblock body_block %}

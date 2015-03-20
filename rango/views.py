@@ -253,9 +253,29 @@ def index(request):
 
     return response
 
+
+def list_profiles(request):
+    current_user = request.user
+    users = User.objects.all()
+    try:
+        profiles = UserProfile.objects.all()
+    except:
+        profiles = None
+
+    context_dict = {
+        'users': users,
+        'profiles': profiles,
+        'current_user': current_user,
+
+    }
+
+    # user.id corresponds to profiles[#].user_id
+    return render(request, 'rango/list_profiles.html', context_dict)
+
+
 @login_required
 def profile(request):
-   #if request.method=='GET':
+
     user = User.objects.get(id=request.user.id)
     
     # did user have a website/picture?
@@ -278,7 +298,7 @@ def register_profile(request):
             if request.user.is_authenticated():
                 profile = profile_form.save(commit=False)
                 user = User.objects.get(id=request.user.id)
-                profile.user7 = user
+                profile.user = user
 
                 if 'picture' in request.FILES:
                     profile.picture = request.FILES['picture']
@@ -494,11 +514,34 @@ def search(request):
 
     return render(request, 'rango/search.html', {'result_list': result_list})
 
+def view_profile(request):
+    # rewrite this
+    # this is ugly :( 
+    # merge with profile
+    url = '/rango/'
+    
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+            print page_id , "is what i got", request.user.id
+            user = User.objects.get(id=page_id)
+    
+            # did user have a website/picture?
+            try:
+                profile = UserProfile.objects.get(user=user)
+            except:
+                profile = None
+
+    context_dict = {
+        'user': user,
+        'profile': profile
+    }
+
+    return render(request, 'rango/profile.html', context_dict)
 
 def track_url(request):
     # TODO: create url patter to go with this
     # why not. 
-
     url = '/rango/'
     
     if request.method == 'GET':

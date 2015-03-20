@@ -42,6 +42,7 @@ urlpatterns = patterns(
     url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', 
         views.add_page, name='add_page'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^list_profiles/$', views.list_profiles, name='list_profiles'),
     url(r'^goto/$', views.track_url, name='goto'),
     # url(r'^login/$', views.user_login, name='login'),
     # url(r'^logout/$', views.user_logout, name='logout'),
@@ -49,6 +50,8 @@ urlpatterns = patterns(
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^restricted/$', views.restricted, name='restricted'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^view_profile/$', views.view_profile, name='view_profile'),
+
     # url(r'^goto/(?P?<page_id>[\w\-]+)/$', 
     #     views.track_url, name='goto'),
 )
