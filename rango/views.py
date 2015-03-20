@@ -138,7 +138,8 @@ def category(request, category_name_slug):
         context_dict['category_name'] = category.name
         # Retrieve all of the associated pages.
         # Note that filter returns >= 1 model instance.
-        pages = Page.objects.filter(category=category)
+        # order by views
+        pages = Page.objects.filter(category=category).order_by('-views')
         context_dict['pages'] = pages
        # We also add the category object from the 
         # database to the context dictionary.
@@ -541,8 +542,9 @@ def view_profile(request):
 
 def track_url(request):
     # TODO: create url patter to go with this
-    # why not. 
+    # why not.
     url = '/rango/'
+    page_id = None
     
     if request.method == 'GET':
         if 'page_id' in request.GET:
