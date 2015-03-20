@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap_toolkit %}
+
+
+
+{% block title %}
+    Profile Registration
+{% endblock %}
+
+{% block body_block %}
+
+
+	{% if user %}
+		{% if profile %}
+			{% if profile.picture %}
+				<img src="{{ profile.picture.url }}" alt="picture" height="60" width="60"/>
+				<br />
+			{% endif %}
+		{% endif %} 
+
+		User: 
+			{{ user.username }}
+		<br />
+		Email:
+			{{ user.email }}
+		<br />
+
+		Website: 
+		<a href="{{ profile.website }}">
+			{{ profile.website }}
+		</a>
+		<br />
+	{% else %}
+		User: 
+			Unknown
+		<br />
+		Email:
+			Unknown
+		<br />
+
+		Website: 
+			Unknown
+		<br />
+
+	{% endif %}
+    
+    {% if user.is_authenticated %}
+    	<a href="{% url 'rango:edit_profile' %}">
+    		Edit Profile
+        </a>
+	{% endif %}
+
+{% endblock body_block %}

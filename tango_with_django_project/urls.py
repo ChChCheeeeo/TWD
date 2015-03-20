@@ -7,7 +7,7 @@ from django.contrib import admin
 # redirect user to index page on successful login
 class MyRegistrationView(RegistrationView):
     def get_success_url(self,request, user):
-        return '/rango/'
+        return '/rango/add_profile/'
 
 
 urlpatterns = patterns(
