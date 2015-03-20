@@ -127,7 +127,9 @@ def category(request, category_name_slug):
     # Create a context dictionary which we can pass
     # to the template rendering engine.
     context_dict = {}
-
+    context_dict['result_list'] = None
+    context_dict['query'] = None
+    
     try:
        # Can we find a category name slug with the 
         # given name? If we can't, the .get() method 
