@@ -13,6 +13,10 @@
 	About
 {% endblock title %}
 
+i am here
+
+
+
 {% block body_block %}
     <div class="page-header">
         <h1>
@@ -35,6 +39,26 @@
 	You've been here {{ visits }} times!
 	<br />
 <!--
+Difference between javascript and jquery.
+This is assigning the function alert() to the onClick handler of the button.
+-->
+<!-- 	<button onClick="alert('You clicked the button using Javascript.');">
+		Click Me - I run Javascript
+	</button>
+	<br /> -->
+
+<!--
+currently no javascript code associated with the button. Its code is in rango-jquery.js
+
+The JQuery/Javascript code here, first selects the document object, and when it is ready, it executes the functions within its body, i.e. $("#about-btn").click(), which selects the element in the page with id equal to about-btn, and then it programatically assigns to the on click event, the alert() function.
+-->
+	<button id="about-btn"> Click Me - I'm Javascript on Speed</button>
+
+	<p>This is a example</p>
+
+	<p>This is another example</p>
+
+<!--
 	load static tag above allows to access
 	static media which allows using the static
 	template lag below.
@@ -45,3 +69,6 @@
         <img src="{% static "images/puppy.jpg" %}" alt="Picture of Puppy" />
     </div>
 {% endblock %}
+
+
+
