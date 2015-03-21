@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load rango_extras %} 
+{% load staticfiles %}
+<!-- if downloaded files -->
+<script src="{% static "js/jquery-1.11.1.js" %}"></script>
+<script src="{% static "js/rango-jquery.js" %}"></script>
+<!-- else refer to it directly -->
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
 <!-- # turn this into a template tag by loading it
   # where you want to use it and call the method
   # e.g.
