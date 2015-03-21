@@ -147,6 +147,10 @@ def category(request, category_name_slug):
         # database to the context dictionary.
         # We'll use this in the template to verify 
         # that the category exists.
+        # this category view passes reference to category
+        # object, "like" can be accsed with { { category.likes } }
+        # in the template.
+
         context_dict['category'] = category
         # category slug for adding pages gets passed
         # to context
@@ -255,6 +259,30 @@ def index(request):
     response = render(request,'rango/index.html', context_dict)
 
     return response
+
+@login_required
+def like_category(request):
+    # assumes category_id has been passed
+    # via a GET so that the we can identify 
+    #the category to update.
+    # TODO: track and record that a particular 
+    #user has "liked" this category
+    
+    cat_id = None
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+
+    likes = 0
+    if cat_id:
+        cat = Category.objects.get(id=int(cat_id))
+    if cat:
+        likes = cat.likes + 1
+        cat.likes =  likes
+        cat.save()
+
+    return HttpResponse(likes)
+
+
 
 
 def list_profiles(request):

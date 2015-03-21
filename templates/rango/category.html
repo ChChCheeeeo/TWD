@@ -33,6 +33,25 @@
         </button>
 
     </form>
+    <br />
+   
+    <p>
+<!-- 
+        “Like” button with id="like" and create a <div> to display the number of likes {{ % category.likes % }}. This sets up the template to capture likes and to display likes for the category.
+ -->
+        <strong id="like_count">
+            {{ category.likes }}
+        </strong> 
+            people like this category
+
+        {% if user.is_authenticated %}
+            <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+                <span class="glyphicon glyphicon-thumbs-up">
+                </span>
+                Like
+            </button>
+        {% endif %}
+    </p>
 
     <br />
     {% if category %}

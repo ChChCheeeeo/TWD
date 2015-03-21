@@ -42,6 +42,7 @@ urlpatterns = patterns(
     url(r'^category/(?P<category_name_slug>[\w\-]+)/add_page/$', 
         views.add_page, name='add_page'),
     url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
+    url(r'^like_category/$', views.like_category, name='like_category'),
     url(r'^list_profiles/$', views.list_profiles, name='list_profiles'),
     url(r'^goto/$', views.track_url, name='goto'),
     # url(r'^login/$', views.user_login, name='login'),
