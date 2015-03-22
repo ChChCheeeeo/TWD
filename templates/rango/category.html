@@ -13,7 +13,6 @@
 {% endblock %}
 
 {% block body_block %}
-
     <form id="category_form" method="post" action="{% url 'rango:add_category' %}">
 
         <h2 class="form-signin-heading">
@@ -34,24 +33,42 @@
 
     </form>
     <br />
-   
-    <p>
-<!-- 
-        “Like” button with id="like" and create a <div> to display the number of likes {{ % category.likes % }}. This sets up the template to capture likes and to display likes for the category.
- -->
-        <strong id="like_count">
-            {{ category.likes }}
-        </strong> 
-            people like this category
+   <div>
+        <p>
+    <!-- 
+            “Like” button with id="like" and create a <div> to display the number of likes { { % category.likes % } }. This sets up the template to capture likes and to display likes for the category.
+     -->
+            <strong id="like_count">
+                {{ category.likes }}
+            </strong> 
+                people like this category
 
-        {% if user.is_authenticated %}
-            <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-                <span class="glyphicon glyphicon-thumbs-up">
-                </span>
-                Like
-            </button>
-        {% endif %}
-    </p>
+    <!--   
+        event handler to the element with id #likes,
+        i.e. the button. When clicked, it extracts the 
+        category id from the button element, then makes
+        an AJAX GET request which calls to
+        /rango/like_category/ encoding the category_id in 
+        the request. If successful, then 
+        the HTML element with id like_count (i.e. the 
+        <strong> ) is updated with the data returned by the
+        request, and the HTML element with id likes (i.e. 
+        the <button>) is hidden. when the button is clicked an AJAX
+        request is made, given our url mapping, this invokes 
+        the like_category view which updates the category and
+        returns the new number of likes. When the AJAX 
+        request receives the response it updates parts of
+        the page, i.e. the text and the button. The #likes 
+        button is hidden.
+     -->
+            {% if user.is_authenticated %}
+                <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                    Like category {{category.id}}
+                </button>
+            {% endif %}
+        </p>
+    </div>
 
     <br />
     {% if category %}

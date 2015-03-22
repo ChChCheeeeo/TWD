@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-// JQuery code to be added in here.
 /*
 	This piece of JQuery, first selects the document
 	object (with $(document)), and then makes a call
@@ -19,7 +18,6 @@ $(document).ready(function() {
 
 	$("#about-btn").click( function(event){
 		alert("You clicked the button using Jqury");
-
 	});
 
 
@@ -43,8 +41,29 @@ $(document).ready(function() {
     	}
     );//end hover
 
-    $("#about-btn").addClass('btn btn-primary')
-    $("#about-btn").click( function(event) {
+	/*
+		change link color after clicking.
+	*/
+    $('#likes').click(
+		function() {
+            $(this).css('color', 'red');
+    	},
+   		
+   		function() {
+            $(this).css('color', 'yellow');
+    	}
+    	// ,
+    	// function(){
+    	// 	console.log("like clicked");
+    	// 	alert('clicked');
+    	// 	document.write('fuck');
+    	// }
+    );//end click
+
+
+
+    // $("#about-btn").addClass('btn btn-primary')
+    // $("#about-btn").click( function(event) {
     	/*
     		It is also possible to access the 
     		html of a particular element.
@@ -59,10 +78,10 @@ $(document).ready(function() {
     		that element.
     	*/
 		
-		msgstr = $("#msg").html()
-		msgstr = msgstr + "o"
+		// msgstr = $("#msg").html()
+		// msgstr = msgstr + "o"
 
-		$("#msg").html(msgstr)
-	 }); // end click
+		// $("#msg").html(msgstr)
+	 // }); // end click
 
 }); // end document ready

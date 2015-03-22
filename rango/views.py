@@ -267,7 +267,6 @@ def like_category(request):
     #the category to update.
     # TODO: track and record that a particular 
     #user has "liked" this category
-    
     cat_id = None
     if request.method == 'GET':
         cat_id = request.GET['category_id']
