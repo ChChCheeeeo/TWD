@@ -1,7 +1,7 @@
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.db import models
-
+from datetime import datetime
 # both inherite from django.db.models.Model
 # The two Python classes will be the definitions for 
 # models representing categories and pages.
@@ -29,6 +29,10 @@ class Category(models.Model):
     # updating the slug field.
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        # test to make sure there cant be a negative
+        # views/likes number
+        if self.views < 0: self.views = 0
+        if self.likes < 0: self.likes = 0
         super(Category, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -65,6 +69,13 @@ class Page(models.Model):
     # max_length parameter.
     url = models.URLField()
     views = models.IntegerField(default=0)
+
+    # passing datetime.now without the parentheses, 
+    # you are passing the actual function
+    # which will be called each time a record is added. 
+    # else all page models will start with the same time
+    first_visit = models.DateTimeField(default=datetime.now, blank=True)
+    last_visit = models.DateTimeField(default=datetime.now, blank=True)
 
     def __unicode__(self):
         return self.title

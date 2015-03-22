@@ -284,7 +284,6 @@ def index(request):
         request.session['visits'] = visits
     context_dict['visits'] = visits
 
-
     response = render(request,'rango/index.html', context_dict)
 
     return response
