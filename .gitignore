@@ -78,6 +78,10 @@ htmlcov
 cleanUp.sh
 updateGit.sh
 keys.py
+restart.sh
+workflow_stuff.rst
+note_stuff.rst
+notes.txt
 
 ####################
 # For this project #
