@@ -15,6 +15,7 @@ from django.shortcuts import render, redirect
 
 from datetime import datetime
 
+
 def about(request):
     # If the visits session varible exists,
     # take it and use it.
@@ -35,7 +36,6 @@ def about(request):
         'rango/about.html',
         context_dict
     )
-
 
 
 @login_required
@@ -122,6 +122,7 @@ def add_page(request, category_name_slug):
 # Update the category view to handle a HTTP POST request.
 #  The view must then include any search results in the
 #   context dictionary for the template to render.
+
 
 def category(request, category_name_slug):
     # Create a context dictionary which we can pass
@@ -260,6 +261,7 @@ def index(request):
 
     return response
 
+
 @login_required
 def like_category(request):
     # assumes category_id has been passed
@@ -282,8 +284,6 @@ def like_category(request):
     return HttpResponse(likes)
 
 
-
-
 def list_profiles(request):
     current_user = request.user
     users = User.objects.all()
@@ -301,6 +301,23 @@ def list_profiles(request):
 
     # user.id corresponds to profiles[#].user_id
     return render(request, 'rango/list_profiles.html', context_dict)
+
+
+def get_category_list(max_results=0, starts_with=''):
+    # helper function for suggest_category view
+    # return list of category objects annotated 
+    # with the encoded category denoted by the attribute, url
+
+    cat_list = []
+    if starts_with:
+        # istartwith ignorecase
+        cat_list = Category.objects.filter(name__istartswith=starts_with)
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+
+    return cat_list
 
 
 @login_required
@@ -321,6 +338,7 @@ def profile(request):
 
     return render(request, 'rango/profile.html', context_dict)
 
+
 def register_profile(request):
     if request.method=='POST':
         profile_form = UserProfileForm(data=request.POST)
@@ -340,6 +358,7 @@ def register_profile(request):
         form = UserProfileForm(request.GET)
 
     return render(request, 'rango/profile_registration.html', {'profile_form': form})
+
 
 ### function taken over by redux ###
 # def register(request):
@@ -532,7 +551,6 @@ def restricted(request):
 
 
 def search(request):
-
     result_list = []
 
     if request.method == 'POST':
@@ -543,6 +561,20 @@ def search(request):
             result_list = run_query(query)
 
     return render(request, 'rango/search.html', {'result_list': result_list})
+
+
+def suggest_category(request):
+    cat_list = []
+    starts_with = ''
+    
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+
+        cat_list = get_category_list(8, starts_with)
+
+    # resusing category_list.html since presenting datea of same type
+    return render(request, 'rango/cats.html', {'cat_list': cat_list })
+
 
 def view_profile(request):
     # rewrite this
@@ -568,6 +600,7 @@ def view_profile(request):
     }
 
     return render(request, 'rango/profile.html', context_dict)
+
 
 def track_url(request):
     # TODO: create url patter to go with this

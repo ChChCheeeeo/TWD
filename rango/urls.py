@@ -51,6 +51,7 @@ urlpatterns = patterns(
     url(r'^profile/$', views.profile, name='profile'),
     url(r'^restricted/$', views.restricted, name='restricted'),
     # url(r'^search/$', views.search, name='search'),
+    url(r'^suggest_category/$', views.suggest_category, name='suggest_category'),
     url(r'^view_profile/$', views.view_profile, name='view_profile'),
 
     # url(r'^goto/(?P?<page_id>[\w\-]+)/$', 
