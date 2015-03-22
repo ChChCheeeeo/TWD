@@ -68,21 +68,37 @@ $(document).ready(function() {
 
 
 /*
-	attached an event handler to the HTML input element with
-	 id="suggestion" to trigger when a keyup event occurs. When it 
-	 does the contents of the input box is obtained and placed into
-	  the query variable. Then a AJAX GET request is made calling 
-	  /rango/category_suggest/ with the query as the parameter. On
-	  success, the HTML element with id=”cats” i.e. the div, is 
-	  updated with the category list html.
+	attached event handler to the HTML input element with
+	 id="suggestion" triggers when a keyup event occurs.
+
+	<li>
+       <input  class="search-query span5" type="text" name="suggestion" value="" id="suggestion" />
+    </li>
+
 */
     $('#suggestion').keyup(function(){
         var query;
-        query = $(this).val();
+        /*
+        	When it does the contents of the input 
+        	box is obtained and placed into the 
+        	query variable. 
+        */
+        query = $(this).val();        
+		/*
+			Then a AJAX GET request is made calling 
+			 /rango/category_suggest/ with the query as the parameter. On
+			 success, the HTML element with id=”cats” i.e. the div, is 
+			 updated with the category list html.
+
+			<div id="cats">
+			</div>
+		*/
         $.get('/rango/suggest_category/', {"suggestion": query}, function(data){
            $('#cats').html(data);
        });
     }); // end #suggestion keyup
+
+
 
 
     $('.rango-add').click(function(event){

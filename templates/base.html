@@ -85,6 +85,27 @@
 
         <div class="col-sm-3 col-md-2 sidebar">
 
+          <!-- suggest categories -->
+          <ul class="nav nav-list">
+            <li class="nav-header">
+              Find a Category
+            </li>
+            <form>
+              <label></label>
+              <li>
+                <input  class="search-query span5" type="text" name="suggestion" value="" id="suggestion" />
+              </li>
+            </form>
+          </ul> <!-- end nav nav-list -->
+
+          <!-- 
+            display response here
+            no need to add button an event handler on keyup to the input box
+            will send the suggestion request.
+          -->
+          <div id="cats">
+          </div>
+
           {% block side_block %}
               <!--
                 possible to pass category because
@@ -94,8 +115,8 @@
               -->
               {% get_category_list category %}
           {% endblock %}
-
-        </div>
+         
+        </div> <!-- end class sidebar --> 
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
            <div>

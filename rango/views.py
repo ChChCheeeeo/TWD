@@ -573,6 +573,9 @@ def suggest_category(request):
         cat_list = get_category_list(8, starts_with)
 
     # resusing category_list.html since presenting datea of same type
+    print
+    print "suggesting: ", cat_list
+    
     return render(request, 'rango/cats.html', {'cat_list': cat_list })
 
 
