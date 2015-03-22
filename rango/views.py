@@ -104,6 +104,29 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context_dict)
 
 
+@login_required
+def auto_add_page(request):
+    cat_id = None
+    url = None
+    title = None
+    context_dict= {}
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+        url = request.GET['url']
+        title = request.GET['title']
+        if cat_id:
+            category = Category.objects.get(id=int(cat_id))
+            p = Page.objects.get_or_create(category=category, title=title, url=url)
+
+            pages = Page.objects.filter(category=category).order_by('-views')
+
+            # Adds our results list to the template context under name pages.
+            context_dict['pages'] = pages
+
+    return render(request, 'rango/page_list.html', context_dict)
+
+
+
 # all view functions defined as part of a Django 
 # project must take at least one parameter. This is 
 # typically called request - and provides access to 
@@ -160,7 +183,12 @@ def category(request, category_name_slug):
         if request.method=='POST':
             result_list = []
 
-            query = request.POST.get('query').strip()
+            # TODO giving nonetype error
+            query = request.POST.get('query')#.strip()
+            #TODO FIX THIS
+            if not isinstance(query, type(None)):
+                query.strip()
+
             if query:
                 result_list = pages.filter(title__icontains=query)
                 result_list = [{

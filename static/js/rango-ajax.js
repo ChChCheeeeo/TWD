@@ -102,6 +102,7 @@ $(document).ready(function() {
 
 
     $('.rango-add').click(function(event){
+        document.write("made it to .rango-add");
         var catid;
         var title;
         var url;

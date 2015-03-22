@@ -23,6 +23,7 @@ urlpatterns = patterns(
     url(r'^add_category/$', views.add_category, 
     	name='add_category'),
     url(r'^add_profile/$', views.register_profile, name='add_profile'),
+    url(r'^auto_add_page/$', views.auto_add_page, name='auto_add_page'),
     # pass the value of the category_name_url parameter
     # to the category() function. Invoke view.category
     # when regex is matched. Matching view then passed

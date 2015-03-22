@@ -19,6 +19,7 @@
 -->
 	    	{% if c == act_cat %}
 	    		<li class="active">
+	    			
 	    		</li>
 	    	{% else %}
 	    	{% endif %}
@@ -26,6 +27,7 @@
 	        	<a href="{% url 'rango:category' c.slug %}">
 	        		{{ c.name }}
 	        	</a>
+
 	        </li>
 	    {% endfor %}
 
