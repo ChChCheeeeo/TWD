@@ -41,7 +41,14 @@ MEDIA_URL = '/media/'
 SECRET_KEY = '+i*kg2#g%#^w0_+nr-94rb5ti0t^9$4$mjgv=mgl&f3iw$weyp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# When you application is ready to go, it's a good 
+# idea to instruct Django that application is now 
+# hosted on a production server. 
+# also means you should set the ALLOWED_HOSTS 
+# property. Failing to perform this step will make 
+# Django return HTTP 400 Bad Request errors.
 DEBUG = True
+
 
 TEMPLATE_DEBUG = True
 TEMPLATE_DIRS = (
@@ -158,3 +165,13 @@ REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged
 LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
                                                                 # and are trying to access pages requiring authentication
+# When you application is ready to go, it's a good 
+# idea to instruct Django that application is now 
+# hosted on a production server. 
+# also means you should set the ALLOWED_HOSTS 
+# property. Failing to perform this step will make 
+# Django return HTTP 400 Bad Request errors.
+
+# ALLOWED_HOSTS = ['*'] # when don't know who it is yet
+# pythonanywhere example
+# ALLOWED_HOSTS = ['<username>.pythonanywhere.com']
